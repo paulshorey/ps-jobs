@@ -1,0 +1,257 @@
+body {
+  font-family: serif; //"bodoni 72",
+  min-width: 380px;
+  > div:first-child {
+    overflow: auto;
+    height: 100vh;
+    width: 100vw;
+  }
+  img,
+  video,
+  iframe {
+    max-width: 100%;
+  }
+}
+
+.fieldset.radio {
+  [type="radio"] {
+    width: 1em;
+    height: 1rem;
+    margin: 0.1rem;
+  }
+
+  .radioStyled {
+    width: 0.89rem;
+    height: 0.9rem;
+    margin-top: 0;
+    margin-left: -0.9rem;
+    pointer-events: none;
+  }
+
+  [type="radio"]:checked + .radioStyled {
+    box-shadow: 0 2px 3px hsla(0deg, 0%, 50%, 0.5);
+    background: orange;
+    box-sizing: border-box;
+    border: solid 0.2rem transparent;
+    border-radius: 50%;
+  }
+
+  label {
+    margin-right: 0.75rem;
+    margin-left: 0.25rem;
+    height: 1rem;
+    line-height: 1rem;
+  }
+
+  [type="radio"],
+  label,
+  .radioStyled {
+    vertical-align: middle;
+    display: inline-block;
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-weight: 600;
+  font-size: 75%;
+  background: hsl(20deg, 12%, 92%);
+  padding: 0.2rem 0.4rem;
+  margin-right: 0.1rem;
+  margin-left: 0.1rem;
+  border-radius: 0.2rem;
+}
+
+.eapps-form-floating-button,
+.eapps-form-floating-button-visible,
+.eapps-form-floating-button-position-right.eapps-form-floating-button-visible {
+  background-color: hsl(38deg, 95%, 49%) !important;
+}
+
+.pageProjectsForClients {
+  .uuiCarousel {
+    img {
+      height: 8rem;
+    }
+    .arrows {
+      display: none;
+    }
+  }
+}
+
+.content {
+  position: relative;
+  width: 80%;
+  min-width: 600px;
+  max-width: 1160px;
+  margin-left: auto;
+  margin-right: auto;
+  @media (max-width: 1099px) {
+    width: 90%;
+  }
+  @media (max-width: 699px) {
+    width: calc(100% - 3rem);
+    min-width: calc(100% - 3rem);
+    margin-right: 0;
+    margin-left: 1.5rem;
+  }
+  &.full {
+    width: calc(100% - 3rem);
+    max-width: 1420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (max-width: 599px) {
+    width: calc(100% - 2rem) !important;
+    min-width: calc(100% - 2rem) !important;
+    margin-right: 0 !important;
+    margin-left: 1rem !important;
+  }
+}
+
+.uui-icon {
+  position: relative;
+  top: 2px;
+  padding: 0 2px;
+}
+
+form {
+  input {
+    padding: 0.125rem 0.25rem;
+    line-height: 1.25rem;
+    border: solid 1px #999;
+    border-radius: 2px;
+    margin-left: 0.125rem;
+    margin-right: 0.25rem;
+  }
+  button {
+    padding: 0.125rem 0.25rem;
+    line-height: 1.25rem;
+    border: solid 1px #999;
+    border-radius: 4px;
+    margin-right: 0.125rem;
+  }
+  &.inline {
+    display: inline;
+    * {
+      display: inline;
+      line-height: 1rem;
+    }
+  }
+}
+
+p,
+.p {
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.15px;
+  line-height: 1.3rem;
+  font-size: 1rem;
+  color: hsl(20deg, 10%, 20%);
+}
+
+a,
+.link {
+  color: orange;
+  text-decoration: underline;
+}
+
+a:hover,
+.link:hover {
+  color: #4bafe1;
+  text-decoration: none;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  background: #ccc;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+}
+
+h2 {
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.75rem;
+  .icon {
+    display: inline-block;
+    width: 1.5rem;
+  }
+}
+
+h3 {
+  line-height: 1.33rem;
+  font-size: 1.33rem;
+  margin: 0;
+  padding: 0;
+  sup {
+    top: auto;
+    line-height: 1;
+    position: static;
+    vertical-align: 0.125rem;
+  }
+}
+
+/*
+ * EFFECTS
+ */
+@-webkit-keyframes playGlow {
+  0% {
+    box-shadow: 0 0 5px 0 orange;
+  }
+
+  40% {
+    box-shadow: 0 0 25px 0 orange;
+  }
+
+  100% {
+    box-shadow: 0 0 5px 0 orange;
+  }
+}
+
+@keyframes playGlow {
+  0% {
+    box-shadow: 0 0 5px 0 orange;
+  }
+
+  40% {
+    box-shadow: 0 0 25px 0 orange;
+  }
+
+  100% {
+    box-shadow: 0 0 5px 0 orange;
+  }
+}
+
+/*
+ * CHEESY EFFECT - forget what it does
+*/
+.h-hidden {
+  transition: opacity 1s linear 10s;
+  opacity: 0;
+}
+
+.h-visible {
+  transition: opacity 1s linear 10s;
+  opacity: 1;
+}
+
+body.ready .h-hidden {
+  opacity: 1;
+}
+
+body.ready .h-visible {
+  opacity: 0;
+}
+
+/*
+ * Classes
+ */
+.flex {
+  display: flex;
+  .flex-grow {
+    flex-grow: 1;
+  }
+}
