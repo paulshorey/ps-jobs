@@ -39,11 +39,15 @@ export const SearchStyled = styled.div`
   }
   .fieldset.radio {
     margin-bottom: 0.45rem;
+    display: flex;
+    label {
+      font-size: 0.75rem;
+      margin-right: 0.5rem;
+    }
   }
   .found {
     margin: 0.5rem 0 0 0;
     font-size: 0.75rem;
     vertical-align: middle;
-    color: #999;
   }
 `

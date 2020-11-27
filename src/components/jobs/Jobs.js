@@ -9,6 +9,19 @@ import { JobsStyled } from "./Jobs.styled.js"
 import Header from "src/components/jobs/Header.js"
 import keydown from "react-keydown"
 
+function get_all_jobs_in_list(list) {
+  let jobsDict = {}
+  for (let uid in window.sessionStorage) {
+    let jobJSON = window.sessionStorage[uid]
+    if (typeof jobJSON !== "string") continue
+    // console.log(uid, jobJSON.substring(0, 50))
+    if (jobJSON.includes(`"list":"${list}"`)) {
+      jobsDict[uid] = JSON.parse(jobJSON)
+    }
+  }
+  return jobsDict
+}
+
 // aggregate sources into list
 let jobsDict = {}
 for (let list of [stackoJobs, indeedJobs]) {
@@ -121,6 +134,7 @@ export default class Jobs extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      reList: "new",
       reExclude:
         "no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
       reHighlight: "cool|labs| fun[^\\w]|remote|wfh|telecommute|remotely|work from|temporary|temporarily",
@@ -131,11 +145,10 @@ export default class Jobs extends React.Component {
     }
   }
   componentDidMount() {
+    /*
+     * Load data on page load
+     */
     this.findMentions(this.state, false)
-    // WHY it doesn't filter out all reExclude terms the first time? IDK. Hack fix:
-    // setTimeout(() => {
-    //   this.findMentions(this.state, false)
-    // })
     /*
      * USER interaction: key press
      */
@@ -185,19 +198,27 @@ export default class Jobs extends React.Component {
   /*
    * USER INTERACTIONS
    */
-  findMentions = ({ reHighlight = "", reExclude = "" }, selectFirst = true) => {
+  findMentions = ({ reHighlight = "", reExclude = "", reList = "" }, selectFirst = true) => {
+    console.log("findMentions", { reHighlight, reExclude, reList })
     // set search string, reset results
     this.setState({ reExclude, reHighlight, jobSelected: {}, jobsFoundLength: 0 }, () => {
       let jobsFoundLength = 0
       let jobsFound = {}
       let jobSelected = {}
+      let jobsDictUse = jobsDict
+      /*
+       * use cached data ?
+       */
+      if (reList !== "new") {
+        jobsDictUse = get_all_jobs_in_list(reList)
+      }
       /*
        * iterate ORIGINAL UNCHANGED LIST {Array}
        */
       let job_prev = {}
       let job_i = 0
-      for (let uid in jobsDict) {
-        let job = { ...jobsDict[uid] }
+      for (let uid in jobsDictUse) {
+        let job = { ...jobsDictUse[uid] }
         // hide recruiters
         if (this.state.noRecruiters) {
           if (!job.employer) continue
@@ -234,6 +255,10 @@ export default class Jobs extends React.Component {
           jobsFound[job.title + job.employer] = job
           jobsFoundLength++
         }
+        // which list
+        if (!job.list) {
+          job.list = "new"
+        }
         // remember job
         if (job_prev) {
           job.prev_job = job_prev
@@ -268,17 +293,13 @@ export default class Jobs extends React.Component {
     return (
       <JobsStyled>
         <Header />
-        <div
-          className="middle"
-          onClick={(event) => {
-            console.log("clicked")
-          }}
-        >
+        <div className="middle">
           <div className="side">
             {/*
              * SEARCH - highlight word
              */}
             <Search
+              reList={this.state.reList}
               reExclude={this.state.reExclude}
               reHighlight={this.state.reHighlight}
               onChange={(state) => {

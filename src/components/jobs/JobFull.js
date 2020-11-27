@@ -1,56 +1,45 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { JobFullStyled } from "./JobFull.styled.js"
-// import { FontAwesomeIcon as FA } from "@fortawesome/react-fontawesome"
-// import { faHeart } from "@fortawesome/pro-regular-svg-icons"
-// import { faHeart as faHeartSolid, faDollarSign, faTimes } from "@fortawesome/pro-solid-svg-icons"
-function get_ss(key, default_value) {
-  if (typeof window !== "object") {
-    return default_value
-  }
-  // return default_value
-  let ss_value = window.sessionStorage.getItem(key)
-  // console.log('got from ss:', key, ss_value);
-  return ss_value ? JSON.parse(ss_value) : default_value
-}
 function set_ss(key, value) {
   if (typeof window === "object") {
     window.sessionStorage.setItem(key, JSON.stringify(value))
   }
 }
 
+// export default class Jobs extends React.Component {
+//   constructor(props) {
+//   }
+//   render(){}
 export default function ({ job = {} }) {
-
   /*
    * State
    */
-  const [putInList, set_putInList] = useState(get_ss("whatList_" + job.uid) || "new")
+  const [renderJob, set_renderJob] = useState({})
   const do_putInList = function (list) {
     //
-    // save job relationship to list
-    set_ss("whatList_" + job.uid, list)
-    //
-    // prepare to save job
-    let saveJob = { ...job }
+    // prepare
+    let saveJob = { ...renderJob }
     delete saveJob.prev_job
     delete saveJob.next_job
+    saveJob.list = list
+    renderJob.list = list
+    // save
+    set_ss(saveJob.uid, saveJob)
     //
-    // all saved jobs
-    let savedJobs = get_ss("savedJobs")
-    if (typeof savedJobs !== "object") {
-      savedJobs = {}
-    }
-    // save all jobs
-    savedJobs[job.uid] = JSON.stringify(saveJob)
-    set_ss("savedJobs", savedJobs)
-    //
-    // set local state
-    set_putInList(list)
+    // state
+    set_renderJob(saveJob)
   }
+  useEffect(() => {
+    if (job && job.title) {
+      set_renderJob({ ...job })
+    }
+  }, [job])
+  console.log("renderJob.list vs. job.list", [renderJob.list, "vs.", renderJob.list])
   /*
    * View
    */
-  if (!job.body) return null
-  let mentions = job.mentions || []
+  if (!renderJob.body) return null
+  let mentions = renderJob.mentions || []
   let random = Math.round(Math.random() * 1000000)
   return (
     <JobFullStyled>
@@ -59,56 +48,61 @@ export default function ({ job = {} }) {
          * TOP LINKS - LIKE/HIDE
          */}
         <div className="topLinks">
-          {/*<a href={job.original || job.url} target="_blank">*/}
-          {/*  <FA icon={faDollarSign} /> {job.original ? "apply to original" : "apply on " + job.source}*/}
-          {/*</a>{" "}*/}
-          {/*&nbsp;|&nbsp;*/}
-          {/*<span className="link">*/}
-          {/*  <FA icon={faHeart} /> save for later*/}
-          {/*</span>{" "}*/}
-          {/*&nbsp;|&nbsp;*/}
-          {/*<span className="link">*/}
-          {/*  <FA icon={faTimes} /> ignore*/}
-          {/*</span>*/}
-
+          {/*
+           *
+           * FORM - SAVE, IGNORE, APPLY, NEW
+           *
+           */}
           <div className="fieldset radio">
             {/*
-             * special case for "apply" link
+             * apply
              */}
             <span
+              className="radioInput"
               onClick={() => {
                 do_putInList("applied")
               }}
             >
-              {putInList === "applied" && (
+              {renderJob.list === "applied" && (
                 <>
-                  <input
-                    type="radio"
-                    name={"showList" + random}
-                    value={"applied"}
-                    defaultChecked={putInList === "applied"}
-                  />
-                  <span className="radioStyled" />
+                  <span className="radio">
+                    {renderJob.list === "applied" ? (
+                      <span className="radioChecked" />
+                    ) : (
+                      <span className="radioUnchecked" />
+                    )}
+                  </span>
                 </>
               )}
-              <label>
-                <a href={job.original || job.url} target="_blank">
-                  {job.original ? "apply to original" : "apply on " + job.source}
+              <label className="radioLabel">
+                <a href={renderJob.original || renderJob.url} target="_blank">
+                  {renderJob.original ? "apply to original" : "apply on " + renderJob.source}
                 </a>
               </label>
             </span>
             {/*
-             * other lists
+             * save
              */}
-            {["new", "saved", "ignored"].reverse().map((val) => (
+            {[
+              ["ignore", "ignored"],
+              ["save", "saved"],
+              ["view", "viewed"],
+              ["new", "new"]
+            ].map((tuple) => (
               <span
+                className="radioInput"
                 onClick={() => {
-                  do_putInList(val)
+                  do_putInList(tuple[1])
                 }}
               >
-                <input type="radio" name={"showList" + random} value={val} defaultChecked={putInList === val} />
-                <span className="radioStyled" />
-                <label>{val}</label>
+                <span className="radio">
+                  {renderJob.list === tuple[1] ? (
+                    <span className="radioChecked" />
+                  ) : (
+                    <span className="radioUnchecked" />
+                  )}
+                </span>
+                <label className="radioLabel">{tuple[0]}</label>
               </span>
             ))}
           </div>
@@ -119,16 +113,16 @@ export default function ({ job = {} }) {
         {mentions.map((found) => found)}
       </div>
       <article>
-        <h2 className="title" dangerouslySetInnerHTML={{ __html: job.title }} />
+        <h2 className="title" dangerouslySetInnerHTML={{ __html: renderJob.title }} />
         <h4 className="subtitle">
-          <a href={"https://www.google.com/search?tbs=qdr:y2&q=" + job.employer} target="_blank">
-            {job.employer}
+          <a href={"https://www.google.com/search?tbs=qdr:y2&q=" + renderJob.employer} target="_blank">
+            {renderJob.employer}
           </a>
         </h4>
-        <div className="body" dangerouslySetInnerHTML={{ __html: job.body }} />
+        <div className="body" dangerouslySetInnerHTML={{ __html: renderJob.body }} />
         <h4 className="subtitle">
-          <a href={job.original || job.url} target="_blank">
-            {job.original ? "view original post" : "view on " + job.source}
+          <a href={renderJob.original || renderJob.url} target="_blank">
+            {renderJob.original ? "view original post" : "view on " + renderJob.source}
           </a>
         </h4>
       </article>

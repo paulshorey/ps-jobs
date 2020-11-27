@@ -31,7 +31,7 @@ export const JobsStyled = styled.div`
       flex-grow: 1;
       min-width: 720px;
       overflow: scroll;
-      margin: 0.25rem 0 3.5rem;
+      margin: 0.25rem 0 2.5rem;
       .full_job_text {
         box-sizing: border-box;
         position: absolute;

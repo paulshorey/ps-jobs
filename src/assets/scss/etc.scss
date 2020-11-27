@@ -1,6 +1,7 @@
 body {
   font-family: serif; //"bodoni 72",
   min-width: 380px;
+  background: hsl(33deg, 99%, 99%);
   > div:first-child {
     overflow: auto;
     height: 100vh;
@@ -13,41 +14,38 @@ body {
   }
 }
 
-.fieldset.radio {
-  [type="radio"] {
-    width: 1em;
-    height: 1rem;
-    margin: 0.1rem;
-  }
-
-  .radioStyled {
-    width: 0.89rem;
-    height: 0.9rem;
-    margin-top: 0;
-    margin-left: -0.9rem;
-    pointer-events: none;
-  }
-
-  [type="radio"]:checked + .radioStyled {
-    box-shadow: 0 2px 3px hsla(0deg, 0%, 50%, 0.5);
-    background: orange;
-    box-sizing: border-box;
-    border: solid 0.2rem transparent;
-    border-radius: 50%;
-  }
-
-  label {
-    margin-right: 0.75rem;
-    margin-left: 0.25rem;
-    height: 1rem;
-    line-height: 1rem;
-  }
-
-  [type="radio"],
-  label,
-  .radioStyled {
+.radioInput {
+  cursor:pointer;
+  * {
     vertical-align: middle;
     display: inline-block;
+  }
+  .radio {
+    height: 1rem;
+    line-height: 1rem;
+    > * {
+      margin: 0 0.1rem;
+      &.radioChecked {
+        box-shadow: 0 2px 3px hsla(0deg, 0%, 50%, 0.5);
+        background: orange;
+        box-sizing: border-box;
+        border: solid 0.2rem transparent;
+        border-radius: 50%;
+        width: 0.8rem;
+        height: 0.8rem;
+      }
+      &.radioUnchecked {
+        width: 0.6rem;
+        height: 0.6rem;
+        border: solid 1px #999;
+        border-radius: 50%;
+      }
+    }
+  }
+  .radioLabel {
+    margin: 0.1rem 0.75rem 0.1rem 0.25rem;
+    height: 1.1rem;
+    line-height: 1.1rem;
   }
 }
 
@@ -77,6 +75,10 @@ code {
       display: none;
     }
   }
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 .content {

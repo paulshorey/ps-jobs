@@ -4,12 +4,12 @@ import { FontAwesomeIcon as FA } from "@fortawesome/react-fontawesome"
 import {
   faArrowAltUp,
   faArrowAltDown,
-  faQuestionCircle as faQuestionCircleSolid,
-  faHandPointLeft as faHandPointLeftSolid
+  faQuestionCircle as faQuestionCircleSolid
+  // faHandPointLeft as faHandPointLeftSolid
 } from "@fortawesome/pro-solid-svg-icons"
 import {
-  faQuestionCircle as faQuestionCircleLight,
-  faHandPointLeft as faHandPointLeftLight
+  faQuestionCircle as faQuestionCircleLight
+  // faHandPointLeft as faHandPointLeftLight
 } from "@fortawesome/pro-regular-svg-icons"
 import quotes from "./json/quotes.json"
 import Quote from "../Quotes/Quote"
@@ -18,15 +18,16 @@ export default function ({ jobSelected = {}, reHighlight = "" }) {
   return (
     <>
       {/*
-       * FULL DESCRIPTION - selected job
-       */}
-      <div className="full_job_text">
-        <JobFull job={jobSelected} src={reHighlight} />
-      </div>
-      {/*
        * QUOTES - if no job selected
        */}
-      {!jobSelected.body && (
+      {jobSelected.uid ? (
+        <div className="full_job_text">
+          {/*
+           * FULL DESCRIPTION - selected job
+           */}
+          <JobFull jobId={jobSelected.uid} job={jobSelected} src={reHighlight} />
+        </div>
+      ) : (
         <div className="home">
           <div className="legend">
             {/*<p>*/}
