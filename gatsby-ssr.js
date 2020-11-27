@@ -37,27 +37,11 @@ export const onPreRenderHTML = ({
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" /> */}
-
-      <link href="/assets/gfx/happyface.ico" rel="shortcut icon" type="image/x-icon" />
+      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
       <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
       {/*<script src="/assets/js/mailchimp.js"></script>*/}
 
-      <script src="/assets/js/jquery.js"></script>
-      <script src="/assets/js/jquery.cycle.js"></script>
-
-      <script src="/assets/js/uuiCarousel/uuiCarousel.js"></script>
-      <link href="/assets/js/uuiCarousel/uuiCarousel.css" rel="stylesheet" type="text/css" />
-
-      <link rel="stylesheet" type="text/css" href="/assets/the_wilderness_downtown/style.css" />
-      <div id="birdsCanvas">
-        <div id="birdsCanvas_bg">
-          {/*
-      I did not make this interactive flying birds background. I appropriated it from a very cool Google Chrome experiment from 2010 called "The Wilderness Downtown", designed/directed by Chris Milk, and developed by some smart guys at Google, for Arcade Fire\'s song "We Used to Wait" and album "The Suburbs".
-      The real thing is much more than just the birds! It's been forgotten after all these years. So, I adopted some of their birds for my own site. See the experiment: (http://www.thewildernessdowntown.com). Read about it: (https://en.wikipedia.org/wiki/The_Wilderness_Downtown).
-    */}
-        </div>
-      </div>
     </>
   )
   // save <head>
@@ -69,17 +53,6 @@ export const onPreRenderHTML = ({
   // bodyComponents.push(<div dangerouslySetInnerHTML={{ __html: foot }} />)
   bodyComponents.push(
     <>
-      {/* Google captcha/analytics */}
-      <script src="https://www.google.com/recaptcha/api.js?render=6LfSN-MUAAAAAOxMUojSlBxkicjSeX1YLW8ds8C1"></script>
-
-      {/*
-      CUSTOM SITE STYLE AND WIDGETS
-     */}
-      <link rel="stylesheet" type="text/css" href="/assets/icomoon/style.css" />
-      <script src="/assets/js/init.js"></script>
-      <script src="/assets/js/uuiModal/uuiModal.js"></script>
-      <link href="/assets/js/uuiModal/uuiModal.css" rel="stylesheet" type="text/css" />
-
       {/*
       ELFSIGHT CONTACT FORM
      */}
