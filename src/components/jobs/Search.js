@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { SearchStyled } from "./Search.styled.js"
-import { FontAwesomeIcon as FA } from "@fortawesome/react-fontawesome"
-import {
-  faQuestionCircle as faQuestionCircleLight,
-  faHandPointLeft as faHandPointLeftLight
-} from "@fortawesome/pro-regular-svg-icons"
 
 export default function ({
   reHighlight = "",
@@ -43,7 +38,7 @@ export default function ({
     <SearchStyled className="Search">
       <div className="form">
         <div className="fieldset radio">
-          {["new", "viewed", "saved", "ignored", "applied"].map((val) => (
+          {["new", "maybe", "ignore", "to apply", "applied"].map((val) => (
             <span
               className="radioInput"
               onClick={() => {

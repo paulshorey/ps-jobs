@@ -43,6 +43,7 @@ export const SearchStyled = styled.div`
     label {
       font-size: 0.75rem;
       margin-right: 0.5rem;
+      line-height: 1.25rem;
     }
   }
   .found {

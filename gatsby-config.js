@@ -3,7 +3,6 @@
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
-
 module.exports = {
   /* Your site config here */
   plugins: [
@@ -15,7 +14,8 @@ module.exports = {
         jsxPlugins: ["styled-jsx-plugin-sass"]
       }
     },
-    "gatsby-plugin-styled-components"
+    "gatsby-plugin-styled-components",
+    "gatsby-plugin-webpack-bundle-analyser-v2"
   ]
 }
 

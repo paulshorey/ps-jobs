@@ -205,12 +205,16 @@ export default class Jobs extends React.Component {
       let jobsFoundLength = 0
       let jobsFound = {}
       let jobSelected = {}
-      let jobsDictUse = jobsDict
+      let jobsDictUse = { ...jobsDict }
       /*
        * use cached data ?
        */
       if (reList !== "new") {
         jobsDictUse = get_all_jobs_in_list(reList)
+      } else {
+        for (let uid in window.sessionStorage) {
+          delete jobsDictUse[uid]
+        }
       }
       /*
        * iterate ORIGINAL UNCHANGED LIST {Array}

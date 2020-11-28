@@ -83,26 +83,17 @@ export default function ({ job = {} }) {
             {/*
              * save
              */}
-            {[
-              ["ignore", "ignored"],
-              ["save", "saved"],
-              ["view", "viewed"],
-              ["new", "new"]
-            ].map((tuple) => (
+            {["new", "maybe", "ignore", "to apply"].reverse().map((val) => (
               <span
                 className="radioInput"
                 onClick={() => {
-                  do_putInList(tuple[1])
+                  do_putInList(val)
                 }}
               >
                 <span className="radio">
-                  {renderJob.list === tuple[1] ? (
-                    <span className="radioChecked" />
-                  ) : (
-                    <span className="radioUnchecked" />
-                  )}
+                  {renderJob.list === val ? <span className="radioChecked" /> : <span className="radioUnchecked" />}
                 </span>
-                <label className="radioLabel">{tuple[0]}</label>
+                <label className="radioLabel">{val}</label>
               </span>
             ))}
           </div>

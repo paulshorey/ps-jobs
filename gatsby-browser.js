@@ -1,7 +1,6 @@
 // custom typefaces
 // import "typeface-quick"
 // import "typeface-merriweather"
-import "typeface-quicksand"
 
 import "/srv/nlp-fe/src/style/variables.scss"
 import "/srv/nlp-fe/src/style/reset.scss"
