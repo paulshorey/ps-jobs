@@ -29,4 +29,11 @@ export const HeaderStyled = styled.header`
   svg {
     vertical-align: -0.2345rem;
   }
+  h1 {
+    svg {
+      font-size: 85%;
+      vertical-align: 0;
+      margin-right: 0.25rem;
+    }
+  }
 `

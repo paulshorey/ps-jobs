@@ -22,7 +22,7 @@ persist in your browser, even after the overall list is updated, until you clear
     Actually did not crawl this, but used browser devtools to collect links. Then, crawled the links in APIFY.
     In the future I would just search Google "node react site:lever.co OR greenhouse.io OR workable.com"
 
-**See `/src/components/Jobs/apify/*` for JavaScript Puppeteer APIFY code used to crawl these sites.**
+**See `/src/components/Jobs/apify/*` for the Puppeteer APIFY JavaScript code used to crawl these sites.** Data is extracted to JSON files, to `/src/components/Jobs/json`.
 
 <p>&nbsp;</p>
 
