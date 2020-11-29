@@ -248,7 +248,7 @@ export default class Jobs extends React.Component {
                 {/*
                  * FULL DESCRIPTION - selected job
                  */}
-                <JobFull job={this.state.jobSelected} removeJob={this.removeJob} />
+                <JobFull job={this.state.jobSelected} removeJob={this.removeJob} nextJob={this.nextJob} />
               </>
             ) : (
               <>

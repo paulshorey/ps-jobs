@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { JobFullStyled } from "./JobFull.styled.js"
 import { set_ss_job } from "./lib/jobs.js"
 
-export default function ({ job = {}, removeJob = () => {} }) {
+export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} }) {
   /*
    * State
    */
@@ -73,6 +73,9 @@ export default function ({ job = {}, removeJob = () => {} }) {
                 className="radioInput"
                 onClick={() => {
                   do_putInList(val)
+                  if (val === "ignore" || val === "maybe" || val === "apply later") {
+                    nextJob()
+                  }
                 }}
               >
                 <span className="radio">
