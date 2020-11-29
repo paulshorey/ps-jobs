@@ -74,7 +74,9 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
                 onClick={() => {
                   do_putInList(val)
                   if (val === "ignore" || val === "maybe" || val === "apply") {
-                    nextJob()
+                    setTimeout(function() {
+                      nextJob()
+                    },500)
                   }
                 }}
               >

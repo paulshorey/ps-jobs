@@ -108,7 +108,6 @@ export default class Jobs extends React.Component {
     this.setState({ jobsFound, jobsFoundLength, jobSelected: job })
   }
   findMentions = ({ reFind1 = "", reFind2 = "", reExclude = "", reList = "" }, selectFirst = true) => {
-    console.log("findMentions", { reFind1, reFind2, reExclude, reList })
     // set search string, reset results
     this.setState({ reExclude, reFind1, reFind2, jobSelected: {}, jobsFoundLength: 0 }, () => {
       let jobsFoundLength = 0
@@ -117,7 +116,7 @@ export default class Jobs extends React.Component {
       /*
        * use cached data if NOT "new"
        */
-      let jobsDictUse = reList==="new" ? { ...jobsDict } : get_all_ss_jobs_in_list(reList)
+      let jobsDictUse = reList === "new" ? { ...jobsDict } : get_all_ss_jobs_in_list(reList)
       /*
        * iterate ORIGINAL UNCHANGED list, and
        * save filtered items to new variable
@@ -129,7 +128,7 @@ export default class Jobs extends React.Component {
         let job = { ...jobsDictUse[uid] }
         job.uid = (job.title + job.employer).toLowerCase()
         // exclude cached data - if new
-        if (reList==="new" && window.localStorage[job.uid]) continue
+        if (reList === "new" && window.localStorage[job.uid]) continue
         // hide recruiters
         if (this.state.noRecruiters) {
           if (!job.employer) continue
