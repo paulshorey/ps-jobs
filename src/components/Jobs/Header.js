@@ -15,7 +15,7 @@ export default function () {
         "remote mid-senior javascript node react" Job Search
       </h1>
       <a
-        href="https://www.indeed.com/jobs?q=%28javascript+or+js%29+%28node+or+nodejs+or+es6+or+%22+AI+%22+or+ui+or+ux+or+uiux+or+elasticsearch%29+%28remote+or+wfh+or+telecommute+or+remotely+or+%22work+from%22%29+-junior+-jr+-intern+-graduate+-associate+-qa+-java+-temporarily+-%22.net%22+-j2ee&fromage=14"
+        href="https://github.com/paulshorey/ps-jobs"
         target="_blank"
       >
         <span>

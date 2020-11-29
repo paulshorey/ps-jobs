@@ -32,9 +32,9 @@ export default function () {
           <a href="https://wordio.co/word?src=boon" target="_blank">
             bane
           </a>
-          . The entire content is downloaded to the browser (front-end). So, searching/browsing is very robust. However,
-          it is slow and not scalable. This interface would probably have more use 1. without the keyword highlighting
-          in the left nav items and 2. with data being served from an API, from an ElasticSearch database.
+          . The entire content is downloaded to the browser (front-end, 8MB). So, searching/browsing is very robust.
+          However, it is slow and not scalable. This interface would probably have more use 1. without the keyword
+          highlighting in the left nav items and 2. with data being served from an API, from an ElasticSearch database.
         </p>
         <p className="color-attention">
           <b>
