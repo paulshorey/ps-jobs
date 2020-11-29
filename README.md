@@ -24,8 +24,6 @@ persist in your browser, even after the overall list is updated, until you clear
 
 **See `/src/components/Jobs/apify/*` for JavaScript Puppeteer APIFY code used to crawl these sites.**
 
-**😬 PLEASE NOTE: 🤦 I do write GIT Commit comments when working on a team.** I even write unit tests occasionally! Haha. This was just a quick hackathon, for fun. Please get in touch if you'd like to contribute. ~ [Paul Shorey .com](https://paulshorey.com)
-
 <p>&nbsp;</p>
 
 <p align="center">
