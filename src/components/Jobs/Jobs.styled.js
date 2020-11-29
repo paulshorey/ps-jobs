@@ -9,18 +9,35 @@ export const JobsStyled = styled.div`
   }
   .middle {
     display: flex;
+    flex-basis: 360px 720px;
     height: 100vh;
     overflow: auto;
     .side {
+      max-width: 100%;
       color: #2557a7;
       position: relative;
       // min/max width to stop from being flexible (parent is display:flex)
-      min-width: 360px;
-      max-width: 360px;
       padding: 0.25rem 0;
       overflow: auto;
       background: hsl(67deg, 33%, 99%);
       box-shadow: 2px 4px 6px 4px rgba(0, 0, 0, 0.075);
+      flex-basis: 360px;
+      flex-shrink: 0;
+      flex-grow: 0;
+      //resize: horizontal;
+      .fullSide {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        opacity: 0.5;
+        cursor: pointer;
+      }
+      &.full {
+        flex-basis: 720px;
+        @media (min-width: 1280px) {
+          min-width: 900px;
+        }
+      }
       .Links {
         padding: 0;
         cursor: pointer;
@@ -28,10 +45,16 @@ export const JobsStyled = styled.div`
     }
     .main {
       position: relative;
-      flex-grow: 1;
-      min-width: 720px;
+      //flex-grow: 1;
       overflow: scroll;
       margin: 0.25rem 0 2.5rem;
+      min-width: 720px;
+      @media (min-width: 1280px) {
+        min-width: 900px;
+      }
+      @media (max-width: 720px) {
+        min-width: 100%
+      }
       .full_job_text {
         box-sizing: border-box;
         position: absolute;
@@ -56,7 +79,7 @@ export const JobsStyled = styled.div`
   }
   .home {
     h3 {
-      font-size:1.5rem;
+      font-size: 1.5rem;
       font-weight: bold;
       margin-bottom: 1rem;
     }

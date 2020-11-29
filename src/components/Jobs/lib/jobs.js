@@ -75,7 +75,7 @@ export function aggregate_jobs(lists) {
       //     continue
       //   }
       // }
-      console.warn("skipped job", obj)
+      // console.warn("skipped job", obj)
     }
   }
   return jobsDict
@@ -94,6 +94,31 @@ export function fixJob(job) {
   if (job.employer) {
     job.employer = job.employer.trim()
     if (job.employer.substring(0, 3) === "at ") job.employer = job.employer.substr(3)
+  }
+  job.title = job.title.replace("(allows remote)", "")
+  {
+    let title_par = job.title.indexOf("(")
+    if (title_par >= 20) {
+      job.subtitle = job.title.substr(title_par)
+      job.title = job.title.substring(0, title_par)
+      // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
+    }
+  }
+  {
+    let title_par = job.title.indexOf("|")
+    if (title_par >= 20) {
+      job.subtitle = job.title.substr(title_par + 1)
+      job.title = job.title.substring(0, title_par)
+      // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
+    }
+  }
+  {
+    let title_par = job.title.indexOf(" - ")
+    if (title_par >= 20) {
+      job.subtitle = job.title.substr(title_par + 3)
+      job.title = job.title.substring(0, title_par)
+      // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
+    }
   }
   if (job.company) job.company = job.company.trim()
   if (job.meta) job.meta = job.meta.replace(" ago", " ago ").replace(/[\w]+/g, " ")
@@ -125,31 +150,6 @@ export function fixIndeed(job) {
 export function fixStackoverflowRSS(job) {
   job.employer = (job.author.name || {}).__text
   job.body = job.description
-  job.title = job.title.replace("(allows remote)", "")
-  {
-    let title_par = job.title.indexOf("(")
-    if (title_par >= 20) {
-      job.subtitle = job.title.substr(title_par)
-      job.title = job.title.substring(0, title_par)
-      // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
-    }
-  }
-  {
-    let title_par = job.title.indexOf("|")
-    if (title_par >= 20) {
-      job.subtitle = job.title.substr(title_par + 1)
-      job.title = job.title.substring(0, title_par)
-      // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
-    }
-  }
-  {
-    let title_par = job.title.indexOf(" - ")
-    if (title_par >= 20) {
-      job.subtitle = job.title.substr(title_par + 3)
-      job.title = job.title.substring(0, title_par)
-      // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
-    }
-  }
   job.body = job.body.replace("()", "")
   job.url = job.link
   job.meta = (job.location || {}).__text + " - " + (job.category || []).toString()

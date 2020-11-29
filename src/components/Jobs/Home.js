@@ -23,6 +23,9 @@ export default function () {
           multiple sources. Click "ignore", "maybe", or "apply", to categorize the article. The content will be saved in
           your account (currently in browser session).
         </p>
+        <p>
+          The boon of this invention is also it's also it's bane
+        </p>
         <p className="color-attention">
           <b>
             <FA icon={faHandPointLeftSolid} className="x85" style={{ transform: "rotate(45deg)" }} /> Use Regular

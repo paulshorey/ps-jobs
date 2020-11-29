@@ -17,16 +17,14 @@ export default class Links extends React.Component {
   componentDidUpdate() {
     if (this.props.className.includes("highlight")) {
       let el = this.jobRef.current
-      if (el) {
-        setTimeout(function(){
-          el.scrollIntoView(false)
-        })
+      if (el && el.getBoundingClientRect().bottom > window.innerHeight) {
+        el.scrollIntoView(false)
       }
     }
   }
 
   render() {
-    const { job = {}, src = "" } = this.props
+    const { job = {} } = this.props
     if (!job.title) return null
     return (
       <JobStyled className={"Job " + (this.props.className || "")} ref={this.jobRef}>

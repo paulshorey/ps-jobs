@@ -1,3 +1,5 @@
+// const PRODUCTION = process.env.GATSBY_ACTIVE_ENV === "production"
+
 // custom typefaces
 // import "typeface-quick"
 // import "typeface-merriweather"
@@ -7,7 +9,8 @@ import "/srv/nlp-fe/src/style/reset.scss"
 import "/srv/nlp-fe/src/style/responsive.scss"
 import "/srv/nlp-fe/src/style/classes.scss"
 
-import "src/scss/etc.scss"
+import styles from "src/scss/styles.scss"
+
 
 // import "src/assets/fonts/taviraj.css"
 // import "src/assets/fonts/spectral.css"
@@ -15,7 +18,7 @@ import "src/scss/etc.scss"
 
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
-import "@fortawesome/fontawesome-svg-core/styles.css"
+// import "@fortawesome/fontawesome-svg-core/styles.css"
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core"
 config.autoAddCss = false /* eslint-disable import/first */

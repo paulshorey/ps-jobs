@@ -42,6 +42,8 @@ export const onPreRenderHTML = ({
       <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
       {/*<script src="/assets/js/mailchimp.js"></script>*/}
 
+      <link rel="stylesheet" type="text/css" href="/css/fontawesome-svg-core.css" />
+      {/*<link rel="stylesheet" type="text/css" href="/css/styles.css"/>*/}
     </>
   )
   // save <head>

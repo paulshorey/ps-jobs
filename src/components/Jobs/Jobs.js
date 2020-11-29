@@ -7,6 +7,8 @@ import Search from "./Search.js"
 import { JobsStyled } from "./Jobs.styled.js"
 import Header from "src/components/jobs/Header.js"
 import keydown from "react-keydown"
+import { FontAwesomeIcon as FA } from "@fortawesome/react-fontawesome"
+import { faExpandAlt } from "@fortawesome/pro-solid-svg-icons"
 
 /*
  * Import sources, aggregate:
@@ -28,12 +30,13 @@ export default class Jobs extends React.Component {
       reList: "new",
       reExclude:
         "no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
-      reFind1: "full.{0,3}stack|analytics|user|labs|cool|fun[^\w]|product",
-      reFind2: "[^\w]US[ ,]+|[^\w]USA[ ,]+|Canada",
+      reFind1: "full.{0,3}stack|analytics|user|labs|cool|fun[^\\w]|product",
+      reFind2: "[^\\w]US[ ,]+|[^\\w]USA[ ,]+|Canada",
       jobSelected: {},
       jobsFound: {},
       jobsFoundLength: 0,
-      noRecruiters: true
+      noRecruiters: true,
+      fullSide: false
     }
   }
   componentDidMount() {
@@ -135,6 +138,7 @@ export default class Jobs extends React.Component {
         }
         // exclude words
         if (reExclude) {
+          // in body
           let matches = job.body.match(new RegExp("(" + reExclude + ")", "uim"))
           if (matches) {
             continue
@@ -212,7 +216,14 @@ export default class Jobs extends React.Component {
       <JobsStyled>
         <Header />
         <div className="middle">
-          <div className="side">
+          <div className={"side " + (this.state.fullSide ? " full" : "")}>
+            <FA
+              className="fullSide"
+              icon={faExpandAlt}
+              onClick={() => {
+                this.setState({ fullSide: !this.state.fullSide })
+              }}
+            />
             {/*
              * SEARCH - highlight word
              */}

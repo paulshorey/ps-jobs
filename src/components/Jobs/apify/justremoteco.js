@@ -38,10 +38,10 @@ async function pageFunction(context) {
   } else if (job.source==='boards.greenhouse.io'){
     // job info
     job.original = job.url+'#app'
-    job.title = ' '+$('#app_body h1').text().trim()
+    job.title = ' '+$('#app_body header h1').text().trim()
     job.body = ' '+$('#app_body #content').html().trim()
-    job.meta = ' '+$('#app_body .location').text().trim()
-    job.employer = ' '+$('#app_body .company-name').text().trim()
+    job.meta = ' '+$('#app_body header .location').text().trim()
+    job.employer = ' '+$('#app_body header .company-name').text().trim()
     if (job.employer.substring(0,3)==='at ') {
       job.employer = job.employer.substr(3).trim()
     }

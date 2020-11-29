@@ -7,7 +7,6 @@ export default function ({ jobsFound = {}, jobSelected = {}, srcText = "", onCli
   return (
     <div className="Links">
       {Object.values(jobsFound).map((job, i) => {
-        if (!job || !job.title) return null
         if (job) {
           return (
             <div
