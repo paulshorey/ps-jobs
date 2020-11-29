@@ -42,7 +42,7 @@ export default function ({
     <SearchStyled className="Search">
       <div className="form">
         <div className="fieldset radio">
-          {["new", "maybe", "ignore", "to apply", "applied"].map((val) => (
+          {["new", "maybe", "ignore", "apply", "applied"].map((val) => (
             <span
               className="radioInput"
               onClick={() => {

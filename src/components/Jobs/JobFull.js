@@ -68,12 +68,12 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
             {/*
              * save
              */}
-            {["new", "maybe", "ignore", "apply later"].reverse().map((val) => (
+            {["new", "maybe", "ignore", "apply"].reverse().map((val) => (
               <span
                 className="radioInput"
                 onClick={() => {
                   do_putInList(val)
-                  if (val === "ignore" || val === "maybe" || val === "apply later") {
+                  if (val === "ignore" || val === "maybe" || val === "apply") {
                     nextJob()
                   }
                 }}
