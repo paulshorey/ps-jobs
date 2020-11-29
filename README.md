@@ -21,7 +21,7 @@ persist in your browser, even after the overall list is updated, until you clear
     In the future I would just search Google "node react site:lever.co OR greenhouse.io OR workable.com"
 
 
-**😬 PLEASE NOTE: 🤦 I do write GIT Commit comments when working on a team, even multiline ones sometimes.** Haha. I'm not one of those people that refuses to write Git commits. This was just a quick hackathon, for fun. Please get in touch if you'd like to contribute. ~ (https://paulshorey.com)[Paul Shorey .com]
+**😬 PLEASE NOTE: 🤦 I do write GIT Commit comments when working on a team, even multiline ones sometimes.** Haha. I'm not one of those people that refuses to write Git commits. This was just a quick hackathon, for fun. Please get in touch if you'd like to contribute. ~ [Paul Shorey .com](https://paulshorey.com)
 
 <p align="center">
   <a href="https://www.gatsbyjs.com">
