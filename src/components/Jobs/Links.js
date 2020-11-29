@@ -7,12 +7,12 @@ export default function ({ jobsFound = {}, jobSelected = {}, srcText = "", onCli
   return (
     <div className="Links">
       {Object.values(jobsFound).map((job, i) => {
+        if (!job || !job.title) return null
         if (job) {
           return (
             <div
               key={i + job.title}
               onClick={() => {
-                console.log("Links.js JOB CLICKED", job)
                 onClick(job)
               }}
             >

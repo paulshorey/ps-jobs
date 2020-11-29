@@ -20,15 +20,16 @@ export default function () {
         <p>
           What's unique about this? The powerful search. Also, results are aggregated into one list (JS Object /
           dictionary), and each job listing is unique (key = title + employer), even if it appears multiple times or in
-          multiple sources. Click "ignore", "maybe", or "apply", to categorize the article. The content will be saved in your account (currently in browser session).
+          multiple sources. Click "ignore", "maybe", or "apply", to categorize the article. The content will be saved in
+          your account (currently in browser session).
         </p>
         <p className="color-attention">
           <b>
             <FA icon={faHandPointLeftSolid} className="x85" style={{ transform: "rotate(45deg)" }} /> Use Regular
-            Expressions to exclude/find results. NOTE: "find2" is case-sensitive!
+            Expressions to exclude/find results.
           </b>{" "}
-          Other fields are not. Also, be careful with spaces! For example, to search for the letter c, enter " c " or
-          "[^\w\d]c[^\w\d]". Simply "c" will match it inside of every word.
+          NOTE: "find2" is case-sensitive! Other fields are not. Be careful with spaces! To search for the programming
+          language "C", enter " c " or "[^\w\d]c[^\w\d]". Simply "c" will match the letter inside almost every word.
         </p>
         <h2 className="color-attention">
           Use keyboard arrows <FA icon={faArrowAltUp} /> /

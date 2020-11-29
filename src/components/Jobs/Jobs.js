@@ -105,7 +105,7 @@ export default class Jobs extends React.Component {
     // remove
     delete this.state.jobsFound[uid]
     // save
-    this.setState({ jobsFound, jobsFoundLength })
+    this.setState({ jobsFound, jobsFoundLength, jobSelected: job })
   }
   findMentions = ({ reFind1 = "", reFind2 = "", reExclude = "", reList = "" }, selectFirst = true) => {
     console.log("findMentions", { reFind1, reFind2, reExclude, reList })

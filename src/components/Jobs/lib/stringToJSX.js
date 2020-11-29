@@ -28,7 +28,7 @@ export function find_mentions(src, text, { className = "", caseSensitive = false
     // highlight phrase in full text
     text = text.replace(phrase_original, phrase)
     // save
-    phrases.push(<span key={i} className="mention" dangerouslySetInnerHTML={{ __html: phrase.trim() }} />)
+    phrases.push(<span key={i+phrase} className="mention" dangerouslySetInnerHTML={{ __html: phrase.trim() }} />)
     i++
   }
 
