@@ -129,7 +129,7 @@ export default class Jobs extends React.Component {
         let job = { ...jobsDictUse[uid] }
         job.uid = (job.title + job.employer).toLowerCase()
         // exclude cached data - if new
-        if (reList==="new" && window.sessionStorage[job.uid]) continue
+        if (reList==="new" && window.localStorage[job.uid]) continue
         // hide recruiters
         if (this.state.noRecruiters) {
           if (!job.employer) continue

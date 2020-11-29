@@ -1,11 +1,11 @@
 /*
- * Get jobs from sessionStorage
+ * Get jobs from localStorage
  *    TODO: convert to IndexedDB
  */
 export function get_all_ss_jobs_in_list(list) {
   let jobsDict = {}
-  for (let uid in window.sessionStorage) {
-    let jobJSON = window.sessionStorage[uid]
+  for (let uid in window.localStorage) {
+    let jobJSON = window.localStorage[uid]
     if (typeof jobJSON !== "string") continue
     // console.log(uid, jobJSON.substring(0, 50))
     if (jobJSON.includes(`"list":"${list}"`)) {
@@ -15,12 +15,12 @@ export function get_all_ss_jobs_in_list(list) {
   return jobsDict
 }
 /*
- * Save job to sessionStorage
+ * Save job to localStorage
  *    TODO: convert to IndexedDB
  */
 export function set_ss_job(key, value) {
   if (typeof window === "object") {
-    window.sessionStorage.setItem(key, JSON.stringify(value))
+    window.localStorage.setItem(key, JSON.stringify(value))
   }
 }
 

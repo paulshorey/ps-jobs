@@ -1,7 +1,7 @@
 import React from "react"
 import { HeaderStyled } from "./Header.styled.js"
 import { FontAwesomeIcon as FA } from "@fortawesome/react-fontawesome"
-import { faQuestionCircle } from "@fortawesome/pro-regular-svg-icons"
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
 
 export default function () {
   return (
@@ -17,7 +17,7 @@ export default function () {
         target="_blank"
       >
         <span>
-          about <FA icon={faQuestionCircle} />
+          about <FA icon={faGithub} />
         </span>
       </a>
     </HeaderStyled>
