@@ -4,12 +4,12 @@
 // import "typeface-quick"
 // import "typeface-merriweather"
 
-import "/srv/nlp-fe/src/style/variables.scss"
-import "/srv/nlp-fe/src/style/reset.scss"
-import "/srv/nlp-fe/src/style/responsive.scss"
-import "/srv/nlp-fe/src/style/classes.scss"
+import "../nlp-fe/src/style/variables.scss"
+import "../nlp-fe/src/style/reset.scss"
+import "../nlp-fe/src/style/responsive.scss"
+import "../nlp-fe/src/style/classes.scss"
 
-import styles from "src/scss/styles.scss"
+import "src/scss/styles.scss"
 
 
 // import "src/assets/fonts/taviraj.css"
