@@ -76,7 +76,7 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
                   if (val === "ignore" || val === "maybe" || val === "apply") {
                     setTimeout(function() {
                       nextJob()
-                    },1000)
+                    },300)
                   }
                 }}
               >
