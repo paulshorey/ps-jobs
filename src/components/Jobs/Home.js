@@ -25,11 +25,11 @@ export default function () {
         </p>
         <p>
           The{" "}
-          <a href="https://wordio.co/word?src=boon" target="_blank">
+          <a href="https://wordio.co/word?str=boon" target="_blank">
             boon
           </a>{" "}
           of this invention is also it's also it's{" "}
-          <a href="https://wordio.co/word?src=boon" target="_blank">
+          <a href="https://wordio.co/word?str=boon" target="_blank">
             bane
           </a>
           . The entire content is downloaded to the browser (front-end, 8MB). So, searching/browsing is very robust.
