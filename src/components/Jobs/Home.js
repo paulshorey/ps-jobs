@@ -24,17 +24,10 @@ export default function () {
           browser even if the site data or sources are updated, until you clear your cache.
         </p>
         <p>
-          The{" "}
-          <a key="boon" href="https://wordio.co/word?str=boon&" target="_blank">
-            boon
-          </a>{" "}
-          of this invention is also it's also it's{" "}
-          <a key="boon" href="https://wordio.co/word?str=bane" target="_blank">
-            bane
-          </a>
-          . The entire content is downloaded to the browser (front-end, 8MB). So, searching/browsing is very robust.
-          However, it is slow and not scalable. This interface would probably have more use 1. without the keyword
-          highlighting in the left nav items and 2. with data being served from an API, from an ElasticSearch database.
+          The boon of this invention is also it's also it's bane. The entire content is downloaded to the browser
+          (front-end, 8MB). So, searching/browsing is very robust. However, it is slow and not scalable. This interface
+          would probably have more use 1. without the keyword highlighting in the left nav items and 2. with data being
+          served from an API, from an ElasticSearch database.
         </p>
         <p className="color-attention">
           <b>
