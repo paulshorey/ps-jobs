@@ -30,7 +30,7 @@ export default class Jobs extends React.Component {
       reList: "new",
       reExclude:
         "no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
-      reFind1: "remote",
+      reFind1: "remote|wfh|telecommute|from home",
       reFind2: "[ ,][US]+[ ,]+|[^\\w]USA[ ,]+|Canada|United.{0,3}States",
       jobSelected: {},
       jobsFound: {},
