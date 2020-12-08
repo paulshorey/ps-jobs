@@ -30,8 +30,8 @@ export default class Jobs extends React.Component {
       reList: "new",
       reExclude:
         "no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
-      reFind1: "front.{0,3}end|full.{0,3}stack|analytics|user|labs|cool|fun[^\w]|product",
-      reFind2: "",
+      reFind1: "remote",
+      reFind2: "[ ,][US]+[ ,]+|[^\\w]USA[ ,]+|Canada|United.{0,3}States",
       jobSelected: {},
       jobsFound: {},
       jobsFoundLength: 0,
@@ -43,6 +43,7 @@ export default class Jobs extends React.Component {
    * case-insensitive include:
    * |NLP|AI[\s,\.\-"]+|
    * |front-?end |
+   * front.{0,3}end|full.{0,3}stack|analytics|user|labs|cool|fun[^\w]|product
    *
    * Case Sensitive Include:
    * [^\\w]US[ ,]+|[^\\w]USA[ ,]+|Canada

@@ -48,23 +48,22 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
             {/*
              * apply
              */}
-            <a href={renderJob.original || renderJob.url} target="_blank">
-              <span
-                className="radioInput"
-                onClick={() => {
-                  do_putInList("applied")
-                }}
-              >
-                <span className="radio">
-                  {renderJob.list === "applied" ? (
-                    <span className="radioChecked" />
-                  ) : (
-                    <span className="radioUnchecked" />
-                  )}
-                </span>
-                <label className="radioLabel link">apply now</label>
+            <span
+              className="radioInput"
+              onClick={() => {
+                do_putInList("applied")
+              }}
+            >
+              <span className="radio">
+                {renderJob.list === "applied" ? <span className="radioChecked" /> : <span className="radioUnchecked" />}
               </span>
-            </a>
+              <label className="radioLabel link">
+                <a href={renderJob.original || renderJob.url} target="_blank">
+                  apply now
+                </a>
+              </label>
+            </span>
+
             {/*
              * save
              */}
@@ -74,9 +73,9 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
                 onClick={() => {
                   do_putInList(val)
                   if (val === "ignore" || val === "maybe" || val === "apply") {
-                    setTimeout(function() {
+                    setTimeout(function () {
                       nextJob()
-                    },300)
+                    }, 300)
                   }
                 }}
               >
