@@ -34,12 +34,13 @@ export function aggregate_jobs(lists) {
       if (!obj) continue
       // handle individual job
       if (obj.job && obj.job.body) {
+        // fix url
         if (!obj.job.url && obj.url) {
           obj.job.url = obj.url
         }
         let job = obj.job
         // fix
-        if (!job.source === "LinkedIn") {
+        if (!job.source) {
           job = fixIndeed(job)
         }
         // unique ?

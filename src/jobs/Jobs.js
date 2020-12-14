@@ -18,7 +18,7 @@ import indeed from "./json/indeed.json"
 import stackoverflow from "./json/stackoverflow.json"
 import justremote from "./json/justremoteco.json"
 import JobFull from "./JobFull"
-let jobsDict = aggregate_jobs([indeed, linkedin, stackoverflow, justremote])
+let jobsDict = aggregate_jobs([linkedin, stackoverflow, justremote, indeed]) //
 
 /*
  * Render, search variables:
@@ -31,7 +31,8 @@ export default class Jobs extends React.Component {
       reExclude:
         "java |coordinator|Ruby on Rails|qa engineer|no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
       reFind1: "culture|remote|wfh|telecommut|from[ -]?home",
-      reFind2: "[^\\w]US[ ,A]+|Canada|United.{0,3}States|America|[A-Z]{1}[\w]+, ?[A-Z]{2} |NYC|Oregon|Colorado|Utah|Montana|Seattle|Washington|Vermont|Texas|RI|Florida|Nevada|Portland|San Francisco|Denver|New York| EST|PST|CST|culture",
+      reFind2:
+        "[^\\w]US[ ,A]+|Canada|United.{0,3}States|America|[A-Z]{1}[w]+, ?[A-Z]{2} |NYC|Oregon|Colorado|Utah|Montana|Seattle|Washington|Vermont|Texas|RI|Florida|Nevada|Portland|San Francisco|Denver|New York| EST|PST|CST|culture",
       jobSelected: {},
       jobsFound: {},
       jobsFoundLength: 0,
