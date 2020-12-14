@@ -4,12 +4,12 @@
  */
 export function get_all_ss_jobs_in_list(list) {
   let jobsDict = {}
-  for (let uid in window.localStorage) {
-    let jobJSON = window.localStorage[uid]
+  for (let company in window.localStorage) {
+    let jobJSON = window.localStorage[company]
     if (typeof jobJSON !== "string") continue
     // console.log(uid, jobJSON.substring(0, 50))
     if (jobJSON.includes(`"list":"${list}"`)) {
-      jobsDict[uid] = JSON.parse(jobJSON)
+      jobsDict[company] = JSON.parse(jobJSON)
     }
   }
   return jobsDict
@@ -89,8 +89,10 @@ export function aggregate_jobs(lists) {
  *    TODO: move to web-crawlers, then remove from here!
  */
 export function fixJob(job) {
+  job.subtitle = job.subtitle||''
   let com_i = job.title.indexOf(",")
   if (com_i !== -1) {
+    job.subtitle += job.title.substr(com_i)
     job.title = job.title.substring(0, com_i)
   }
   if (job.title) job.title = job.title.trim()
@@ -102,7 +104,7 @@ export function fixJob(job) {
   {
     let title_par = job.title.indexOf("(")
     if (title_par >= 5) {
-      job.subtitle = job.title.substr(title_par)
+      job.subtitle += job.title.substr(title_par)
       job.title = job.title.substring(0, title_par)
       // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
     }
@@ -110,7 +112,7 @@ export function fixJob(job) {
   {
     let title_par = job.title.indexOf("|")
     if (title_par >= 20) {
-      job.subtitle = job.title.substr(title_par + 1)
+      job.subtitle += job.title.substr(title_par + 1)
       job.title = job.title.substring(0, title_par)
       // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
     }
@@ -118,7 +120,7 @@ export function fixJob(job) {
   {
     let title_par = job.title.indexOf(" - ")
     if (title_par >= 30) {
-      job.subtitle = job.title.substr(title_par + 3)
+      job.subtitle += job.title.substr(title_par + 3)
       job.title = job.title.substring(0, title_par)
       // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
     }
@@ -130,13 +132,14 @@ export function fixJob(job) {
   } else {
     job.body += "\n<b> Employer: " + job.employer + "</b><br />"
   }
+  job.body += "\n<b> Etc: <b>" + job.subtitle + "</b> " + job.meta + "</b><br />"
   return job
 }
 export function fixIndeed(job) {
   if (job.meta) {
     // add to body
     job.meta = job.meta.replace(
-      /If you require alternative methods of application or screening, you must approach the employer directly to request this as Indeed is not responsible for the employer's application process./gi,
+      "If you require alternative methods of application or screening, you must approach the employer directly to request this as Indeed is not responsible for the employer's application process.",
       ""
     )
     job.meta = job.meta.replace(/Report job|original job/gi, "")

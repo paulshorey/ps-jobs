@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { JobFullStyled } from "./JobFull.styled.js"
 import { set_ss_job } from "./lib/jobs.js"
+import { find_mentions } from "./lib/html"
 
-export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} }) {
+export default function ({ job = {}, reFind = [], removeJob = () => {}, nextJob = () => {} }) {
   /*
    * State
    */
@@ -15,11 +16,11 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
     saveJob.list = list
     renderJob.list = list
     // save cache
-    set_ss_job(saveJob.uid, saveJob)
+    set_ss_job(saveJob.company || saveJob.employer, saveJob)
     // save local state
     set_renderJob(saveJob)
     // remove from nav
-    removeJob(saveJob)
+    // removeJob(saveJob)
   }
   useEffect(() => {
     if (job && job.title) {
@@ -31,7 +32,34 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
    * View
    */
   if (!renderJob.body) return null
-  let mentions = renderJob.mentions || []
+
+  // find mentions
+  let title = renderJob.title
+  let body = renderJob.body
+  let mentions = []
+  let reFindLast = reFind[reFind.length - 1]
+  // find in body
+  for (let reFind1 of reFind) {
+    let mentionsTuple = find_mentions(reFind1, body, { className: reFind1 === reFindLast ? "" : "subtle" })
+    if (!mentionsTuple || !mentionsTuple.length) continue
+    let mentionsList = mentionsTuple[0]
+    if (!mentionsList.length) continue
+    body = mentionsTuple[1]
+    mentions = [...mentions, ...mentionsList]
+  }
+  // find in title
+  for (let reFind1 of reFind) {
+    let mentionsTuple = find_mentions(reFind1, title, { className: reFind1 === reFindLast ? "" : "subtle" })
+    if (!mentionsTuple || !mentionsTuple.length) continue
+    let mentionsList = mentionsTuple[0]
+    if (!mentionsList.length) continue
+    title = mentionsTuple[1]
+  }
+  // fix
+  mentions = mentions.filter((str) => typeof str === "string").map((str) => str.replace(/[0-9]+[A-Z]+/g, ""))
+  mentions = [...new Set(mentions)]
+
+  // render
   return (
     <JobFullStyled>
       <div className="mentions">
@@ -93,10 +121,10 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
         {/*
          * HIGHLIGHTED MENTIONS
          */}
-        {mentions.map((found) => found)}
+        <div className="mentions" dangerouslySetInnerHTML={{ __html: mentions.toString() }} />
       </div>
       <article>
-        <h2 className="title" dangerouslySetInnerHTML={{ __html: renderJob.title }} />
+        <h2 className="title" dangerouslySetInnerHTML={{ __html: title }} />
         <h4 className="subtitle">
           <a href={"https://www.google.com/search?tbs=qdr:y2&q=" + renderJob.employer} target="_blank">
             {renderJob.employer}
@@ -106,7 +134,7 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
             view on {renderJob.source}
           </a>
         </h4>
-        <div className="body" dangerouslySetInnerHTML={{ __html: renderJob.body }} />
+        <div className="body" dangerouslySetInnerHTML={{ __html: body }} />
       </article>
     </JobFullStyled>
   )

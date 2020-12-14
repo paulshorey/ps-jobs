@@ -4,6 +4,20 @@ export const SearchStyled = styled.div`
   border: none;
   margin: 0.875rem -1px 0.5rem;
   padding: 0 0.67rem 0.5rem;
+  .add-remove-find {
+    float: right;
+    position: relative;
+    top: -0.125rem;
+    right: -0.125rem;
+    font-weight: bold;
+    span {
+      cursor: pointer;
+      display: inline-block;
+      padding: 0 0.5rem;
+      font-size: 0.9rem;
+      vertical-align: baseline;
+    }
+  }
   .form {
     flex-grow: 1;
   }

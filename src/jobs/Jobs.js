@@ -1,6 +1,6 @@
 import React from "react"
 import { get_all_ss_jobs_in_list, aggregate_jobs } from "./lib/jobs.js"
-import { find_mentions } from "./lib/stringToJSX.js"
+import { find_mentions } from "./lib/html.js"
 import Links from "./Links.js"
 import Home from "./Home.js"
 import Search from "./Search.js"
@@ -11,14 +11,15 @@ import { FontAwesomeIcon as FA } from "@fortawesome/react-fontawesome"
 import { faExpandAlt } from "@fortawesome/pro-solid-svg-icons"
 
 /*
- * Import sources, aggregate:
+ * Import sources, aggregate: --- THIS SHOULD BE MOVED TO BACKEND - INGEST INTO ELASTICSEARCH ---
  */
-import linkedin from "./json/linkedin.json"
-import indeed from "./json/indeed.json"
-import stackoverflow from "./json/stackoverflow.json"
-import justremote from "./json/justremoteco.json"
+// import indeed2012 from "./json/listings/indeed-20-12.json"
+import linkedin2011 from "./json/listings/linkedin-20-11.json"
+import indeed2011 from "./json/listings/indeed-20-11.json"
+import stackoverflow2011 from "./json/listings/stackoverflow-20-11.json"
+import justremote2011 from "./json/listings/justremoteco-20-11.json"
 import JobFull from "./JobFull"
-let jobsDict = aggregate_jobs([linkedin, stackoverflow, justremote, indeed]) //
+let jobsDict = aggregate_jobs([[], linkedin2011, stackoverflow2011, justremote2011, indeed2011]) //
 
 /*
  * Render, search variables:
@@ -29,10 +30,12 @@ export default class Jobs extends React.Component {
     this.state = {
       reList: "new",
       reExclude:
-        "java |coordinator|Ruby on Rails|qa engineer|no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
-      reFind1: "culture|remote|wfh|telecommut|from[ -]?home",
-      reFind2:
-        "[^\\w]US[ ,A]+|Canada|United.{0,3}States|America|[A-Z]{1}[w]+, ?[A-Z]{2} |NYC|Oregon|Colorado|Utah|Montana|Seattle|Washington|Vermont|Texas|RI|Florida|Nevada|Portland|San Francisco|Denver|New York| EST|PST|CST|culture",
+        "our client|java |coordinator|ruby on rails|qa engineer|no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
+      reFind: [
+        "remote|wfh|commut|work from|temp",
+        "[^\\w]US[ ,A]+|Canada|United.{0,3}States|America|[A-Z]{1}[w]+, ?[A-Z]{2} |NYC|Oregon|Colorado|Utah|Montana|Seattle|Washington|Vermont|Texas|RI|Florida|Nevada|Portland|San Francisco|Denver|New York| EST|PST|CST",
+        "full.{0,3}stack|front.{0,3}end",
+      ],
       jobSelected: {},
       jobsFound: {},
       jobsFoundLength: 0,
@@ -56,7 +59,7 @@ export default class Jobs extends React.Component {
     /*
      * Load data on page load
      */
-    this.findMentions(this.state, false)
+    this.findMentions(this.state) // set 2nd argument to true, to auto-select first job
     /*
      * USER interaction: key press
      */
@@ -123,9 +126,9 @@ export default class Jobs extends React.Component {
     // save
     this.setState({ jobsFound, jobsFoundLength, jobSelected: job.next_job || job.prev_job || job })
   }
-  findMentions = ({ reFind1 = "", reFind2 = "", reExclude = "", reList = "" }, selectFirst = true) => {
+  findMentions = ({ reFind, reExclude = "", reList = "" }, selectFirst = true) => {
     // set search string, reset results
-    this.setState({ reExclude, reFind1, reFind2, jobSelected: {}, jobsFoundLength: 0 }, () => {
+    this.setState({ reExclude, reFind, jobSelected: {}, jobsFoundLength: 0 }, () => {
       let jobsFoundLength = 0
       let jobsFound = {}
       let jobSelected = {}
@@ -139,55 +142,46 @@ export default class Jobs extends React.Component {
        */
       let job_prev = {}
       let job_i = 0
-      for (let uid in jobsDictUse) {
+      for_jobsDict: for (let uid in jobsDictUse) {
         // each job
         let job = { ...jobsDictUse[uid] }
         job.uid = (job.title + job.employer).toLowerCase()
         // exclude cached data - if new
-        if (reList === "new" && window.localStorage[job.uid]) continue
+        if (reList === "new" && window.localStorage[job.company||job.employer]) continue
         // hide recruiters
         if (this.state.noRecruiters) {
           if (!job.employer) continue
         }
         // exclude words
         if (reExclude) {
-          // in body
-          let matches = job.body.match(new RegExp("(" + reExclude + ")", "uim"))
-          if (matches) {
+          try {
+            // in body
+            let matches = job.body.match(new RegExp("(" + reExclude + ")", "uim"))
+            if (matches) {
+              continue
+            }
+          } catch (e) {
+            // error
             continue
           }
         }
         /*
          * find and highlight the mentions inside title and body
          */
-        if (reFind1 || reFind2) {
+        for (let reFind1 of reFind) {
           if (reFind1) {
-            // in title
-            let highlightTitle = find_mentions(reFind1, job.title, { className: "subtle" })
-            if (highlightTitle && highlightTitle[1]) {
-              job.title = highlightTitle[1]
+            try {
+              // flags
+              let caseSensitive = reFind1.toLowerCase() !== reFind1
+              let reFlags = caseSensitive ? "um" : "uim"
+              // in title
+              if (!(job.title + job.body).match(new RegExp("(" + reFind1 + ")", reFlags))) {
+                continue for_jobsDict
+              }
+            } catch (e) {
+              // error
+              continue for_jobsDict
             }
-            // in body
-            let mentionsTuple = find_mentions(reFind1, job.body, { className: "subtle" })
-            if (!mentionsTuple || !mentionsTuple.length) continue
-            let mentionsList = mentionsTuple[0]
-            if (!mentionsList.length) continue
-            job.body = mentionsTuple[1]
-            job.mentions = mentionsList
-          }
-          if (reFind2) {
-            // in title
-            let highlightTitle = find_mentions(reFind2, job.title, { caseSensitive: true })
-            if (highlightTitle && highlightTitle[1]) {
-              job.title = highlightTitle[1]
-            }
-            // in body
-            let mentionsTuple = find_mentions(reFind2, job.body, { caseSensitive: true })
-            if (!mentionsTuple || !mentionsTuple.length) continue
-            let mentionsList = mentionsTuple[0]
-            if (!mentionsList.length) continue
-            job.body = mentionsTuple[1]
-            job.mentions = job.mentions ? [...mentionsList, ...job.mentions] : mentionsList
           }
         }
         // duplicate job, already in list
@@ -247,8 +241,7 @@ export default class Jobs extends React.Component {
             <Search
               reList={this.state.reList}
               reExclude={this.state.reExclude}
-              reFind1={this.state.reFind1}
-              reFind2={this.state.reFind2}
+              reFind={this.state.reFind}
               onChange={(state) => {
                 this.findMentions(state)
               }}
@@ -262,8 +255,6 @@ export default class Jobs extends React.Component {
               className="jobs"
               jobsFound={this.state.jobsFound}
               jobSelected={this.state.jobSelected}
-              reFind1={this.state.reFind1}
-              reFind2={this.state.reFind2}
               onClick={(job) => {
                 this.setState({ jobSelected: job })
               }}
@@ -275,7 +266,12 @@ export default class Jobs extends React.Component {
                 {/*
                  * FULL DESCRIPTION - selected job
                  */}
-                <JobFull job={this.state.jobSelected} removeJob={this.removeJob} nextJob={this.nextJob} />
+                <JobFull
+                  reFind={this.state.reFind}
+                  job={this.state.jobSelected}
+                  removeJob={this.removeJob}
+                  nextJob={this.nextJob}
+                />
               </>
             ) : (
               <>

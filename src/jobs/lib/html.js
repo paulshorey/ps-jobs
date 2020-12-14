@@ -7,12 +7,13 @@ import React from "react"
  * @param text {string} - fulltext body in which to search for keyword
  * @returns {array} - array of JSX elements, to be used by React like <div>{phrases}</div>
  */
-export function find_mentions(src, text, { className = "", caseSensitive = false } = {}) {
+export function find_mentions(src, text, { className = "" } = {}) {
   if (!src || !text) return [[], text]
   if (src[0] === "|") src = src.substr(1)
   if (src[src.length - 1] === "|") src = src.substring(0, src.length - 1)
   try {
     // regex flags
+    let caseSensitive = src.toLowerCase() !== src
     let reFlags = "g" + (caseSensitive ? "" : "i")
     // find
     let phrases = []
@@ -33,7 +34,7 @@ export function find_mentions(src, text, { className = "", caseSensitive = false
       // highlight phrase in full text
       text = text.replace(phrase_original, phrase)
       // save
-      phrases.push(<span key={i + phrase} className="mention" dangerouslySetInnerHTML={{ __html: phrase.trim() }} />)
+      phrases.push('<span class="mention">'+phrase.trim()+'</span>')
       i++
     }
 

@@ -1,38 +1,44 @@
 import React, { useState, useEffect } from "react"
 import { SearchStyled } from "./Search.styled.js"
 
-export default function ({
-  reFind1 = "",
-  reFind2 = "",
-  reExclude = "",
-  reList = "new",
-  onChange = () => {},
-  jobsFoundLength = 0
-}) {
+export default function ({ reFind = [], reExclude = "", reList = "new", onChange = () => {}, jobsFoundLength = 0 }) {
   /*
    * Local state updates when incoming props changes
    */
   const [inputList, set_inputList] = useState(reList)
   const [inputExclude, set_inputExclude] = useState(reExclude)
-  const [inputFind1, set_inputFind1] = useState(reFind1)
-  const [inputFind2, set_inputFind2] = useState(reFind2)
+  const [inputFind, set_inputFind] = useState(reFind)
   useEffect(() => {
     set_inputList(reList)
     set_inputExclude(reExclude)
-    set_inputFind1(reFind1)
-    set_inputFind2(reFind2)
-  }, [reFind1, reExclude])
+    set_inputFind(reFind)
+  }, [reFind, reExclude])
   /*
    * User submit
    */
-  const submitChanges = function (changedState) {
+  const addFind = function () {
+    reFind.push("")
+    set_inputFind(reFind)
+    saveEdits()
+  }
+  const removeFind = function () {
+    reFind.pop()
+    set_inputFind(reFind)
+    saveEdits()
+  }
+  const editFind = function (i, value) {
+    console.warn("editFind", i, value)
+    reFind[i] = value
+    set_inputFind(reFind)
+  }
+  const saveEdits = function (changes) {
     let toChange = {
-      reList: typeof changedState.reList !== "undefined" ? changedState.reList : reList,
-      reExclude: typeof changedState.reExclude !== "undefined" ? changedState.reExclude : reExclude,
-      reFind1: typeof changedState.reFind1 !== "undefined" ? changedState.reFind1 : reFind1,
-      reFind2: typeof changedState.reFind2 !== "undefined" ? changedState.reFind2 : reFind2
+      reList: typeof inputList !== "undefined" ? inputList : reList,
+      reExclude: typeof inputExclude !== "undefined" ? inputExclude : reExclude,
+      reFind: typeof inputFind !== "undefined" ? inputFind : reFind,
+      ...changes
     }
-    if (toChange.reExclude === reExclude && toChange.reFind1 === reFind1 && !toChange.reList) return
+    if (toChange.reExclude === reExclude && toChange.reFind === reFind && !toChange.reList) return
     onChange({ ...toChange })
   }
   /*
@@ -47,7 +53,7 @@ export default function ({
               className="radioInput"
               onClick={() => {
                 set_inputList(val)
-                submitChanges({ reList: val })
+                saveEdits({ reList: val })
               }}
             >
               <span className="radio">
@@ -59,7 +65,7 @@ export default function ({
         </div>
         <div className="fieldset text">
           <input
-            placeholder="case-insensitive regexp"
+            placeholder="exclude keywords (regexp)"
             type="text"
             value={inputExclude}
             onChange={(event) => {
@@ -67,90 +73,56 @@ export default function ({
             }}
             onKeyPress={(event) => {
               if (event.key === "Enter") {
-                submitChanges({ reExclude: inputExclude })
+                saveEdits({ reExclude: inputExclude })
               }
             }}
             onBlur={() => {
-              submitChanges({ reExclude: inputExclude })
+              saveEdits({ reExclude: inputExclude })
             }}
           />
           <span className="button">exclude</span>
         </div>
-        <div className="fieldset text">
-          <input
-            placeholder="case-insensitive regexp search"
-            type="text"
-            value={inputFind1}
-            onChange={(event) => {
-              set_inputFind1(event.target.value)
-            }}
-            onKeyPress={(event) => {
-              if (event.key === "Enter") {
-                submitChanges({ reFind1: inputFind1 })
-              }
-            }}
-            onBlur={() => {
-              submitChanges({ reFind1: inputFind1 })
-            }}
-          />
-          <span className="button">find1</span>
-        </div>
-        <div className="fieldset text">
-          <input
-            placeholder="Case-Sensitive RegExp Search"
-            type="text"
-            value={inputFind2}
-            onChange={(event) => {
-              set_inputFind2(event.target.value)
-            }}
-            onKeyPress={(event) => {
-              if (event.key === "Enter") {
-                submitChanges({ reFind2: inputFind2 })
-              }
-            }}
-            onBlur={() => {
-              submitChanges({ reFind2: inputFind2 })
-            }}
-          />
-          <span className="button">find2</span>
-        </div>
+        {/*
+         * Find
+         */}
+        {inputFind.map((inputFind1, i) => (
+          <div key={"find" + i}>
+            <div className="fieldset text">
+              <input
+                placeholder="find keywords (regexp)"
+                type="text"
+                defaultValue={inputFind1}
+                onChange={(event) => {
+                  editFind(i, event.target.value)
+                }}
+                onKeyPress={(event) => {
+                  if (event.key === "Enter") {
+                    saveEdits()
+                  }
+                }}
+                onBlur={() => {
+                  saveEdits()
+                }}
+              />
+              <span className="button">find{i + 1}</span>
+            </div>
+          </div>
+        ))}
       </div>
       <div className="found color-attention">
+        <b className="add-remove-find">
+          <span onClick={removeFind}>
+            {" "}
+            <b>&ndash;</b>{" "}
+          </span>
+          /
+          <span onClick={addFind}>
+            {" "}
+            <b>+</b>{" "}
+          </span>
+        </b>
         <b>found {jobsFoundLength} results:</b>
       </div>
     </SearchStyled>
   )
 }
-
-// import React, { useState } from "react"
-//
-// export default class Links extends React.Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       inputFind1: props.inputFind1 || ""
-//     }
-//   }
-//   render() {
-//     const { reFind1 = "", onChange = () => {} } = this.props
-//     return (
-//       <fieldset>
-//         <input
-//           type="text"
-//           value={inputFind1}
-//           onChange={(event) => {
-//             this.setState({ inputFind1: event.target.value })
-//           }}
-//         />
-//         <button
-//           type="button"
-//           onClick={() => {
-//             submitChanges({reFind1:inputFind1})
-//           }}
-//         >
-//           find
-//         </button>
-//       </fieldset>
-//     )
-//   }
-// }

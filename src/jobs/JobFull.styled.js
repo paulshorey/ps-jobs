@@ -28,7 +28,7 @@ export const JobFullStyled = styled.div`
       }
       opacity: 0.67;
       border-bottom: solid 2px hsla(57deg, 100%, 70%, 0.75);
-      margin: 0 1rem 0.5rem 0;
+      margin: 0 0 0.5rem 1rem;
       &:first-child {
         margin-left: 0;
       }
