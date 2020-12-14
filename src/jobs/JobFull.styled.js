@@ -14,6 +14,7 @@ export const JobFullStyled = styled.div`
     .topLinks {
       float: right;
       font-size: 1rem;
+      user-select: none;
       svg {
         vertical-align: -0.2345rem;
       }

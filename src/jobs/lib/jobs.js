@@ -98,7 +98,7 @@ export function fixJob(job) {
   job.title = job.title.replace("(allows remote)", "")
   {
     let title_par = job.title.indexOf("(")
-    if (title_par >= 20) {
+    if (title_par >= 5) {
       job.subtitle = job.title.substr(title_par)
       job.title = job.title.substring(0, title_par)
       // job.body = "<h4>" + job.subtitle + "</h4>" + job.body
@@ -114,7 +114,7 @@ export function fixJob(job) {
   }
   {
     let title_par = job.title.indexOf(" - ")
-    if (title_par >= 20) {
+    if (title_par >= 30) {
       job.subtitle = job.title.substr(title_par + 3)
       job.title = job.title.substring(0, title_par)
       // job.body = "<h4>" + job.subtitle + "</h4>" + job.body

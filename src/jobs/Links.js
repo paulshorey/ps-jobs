@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react"
-import Job from "src/components/jobs/Job.js"
+import Job from "src/jobs/Job.js"
 
 export default function ({ jobsFound = {}, jobSelected = {}, srcText = "", onClick = () => {} }) {
   // const [srcText, set_srcText] = useState("remote|wfh|telecommute|remotely|work from")

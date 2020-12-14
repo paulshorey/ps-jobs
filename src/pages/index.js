@@ -1,5 +1,5 @@
 import React from "react"
-import Page from "src/components/Jobs"
+import Page from "src/jobs"
 import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`

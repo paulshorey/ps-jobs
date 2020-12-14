@@ -5,7 +5,7 @@ import Links from "./Links.js"
 import Home from "./Home.js"
 import Search from "./Search.js"
 import { JobsStyled } from "./Jobs.styled.js"
-import Header from "src/components/jobs/Header.js"
+import Header from "src/jobs/Header.js"
 import keydown from "react-keydown"
 import { FontAwesomeIcon as FA } from "@fortawesome/react-fontawesome"
 import { faExpandAlt } from "@fortawesome/pro-solid-svg-icons"
@@ -18,7 +18,7 @@ import indeed from "./json/indeed.json"
 import stackoverflow from "./json/stackoverflow.json"
 import justremote from "./json/justremoteco.json"
 import JobFull from "./JobFull"
-let jobsDict = aggregate_jobs([stackoverflow, indeed, linkedin, justremote])
+let jobsDict = aggregate_jobs([linkedin, justremote, indeed, stackoverflow])
 
 /*
  * Render, search variables:
@@ -29,8 +29,8 @@ export default class Jobs extends React.Component {
     this.state = {
       reList: "new",
       reExclude:
-        "no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
-      reFind1: "culture|grow|remote|wfh|telecommut|from[ -]?home",
+        "java |coordinator|Ruby on Rails|qa engineer|no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
+      reFind1: "culture|remote|wfh|telecommut|from[ -]?home",
       reFind2: "[^\\w]US[ ,A]+|Canada|United.{0,3}States|America|[A-Z]{1}[\w]+, ?[A-Z]{2} |NYC|Oregon|Colorado|Utah|Montana|Seattle|Washington|Vermont|Texas|RI|Florida|Nevada|Portland|San Francisco|Denver|New York| EST|PST|CST|culture",
       jobSelected: {},
       jobsFound: {},
@@ -120,7 +120,7 @@ export default class Jobs extends React.Component {
     // remove
     delete this.state.jobsFound[uid]
     // save
-    this.setState({ jobsFound, jobsFoundLength, jobSelected: job })
+    this.setState({ jobsFound, jobsFoundLength, jobSelected: job.next_job || job.prev_job || job })
   }
   findMentions = ({ reFind1 = "", reFind2 = "", reExclude = "", reList = "" }, selectFirst = true) => {
     // set search string, reset results
@@ -188,17 +188,21 @@ export default class Jobs extends React.Component {
             job.body = mentionsTuple[1]
             job.mentions = job.mentions ? [...mentionsList, ...job.mentions] : mentionsList
           }
-          // auto-select first found result
-          if (selectFirst && !jobSelected.body) {
-            jobSelected = job
-          }
-          // save, with unique key
-          jobsFound[(job.title + job.employer).toLowerCase()] = job
-          jobsFoundLength++
+        }
+        // duplicate job, already in list
+        if (jobsFound[(job.title + job.employer).toLowerCase()]) {
+          // delete it
+          // jobsFound[(job.title + job.employer).toLowerCase()] = null
+          continue
         } else {
+          // new job, does not exist, save it
           // save, with unique key
           jobsFound[(job.title + job.employer).toLowerCase()] = job
           jobsFoundLength++
+        }
+        // auto-select first found result
+        if (selectFirst && !jobSelected.body) {
+          jobSelected = job
         }
         // which list
         if (!job.list) {

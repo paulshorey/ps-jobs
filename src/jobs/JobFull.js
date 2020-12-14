@@ -18,8 +18,8 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
     set_ss_job(saveJob.uid, saveJob)
     // save local state
     set_renderJob(saveJob)
-    // affect global state
-    removeJob(saveJob.uid)
+    // remove from nav
+    removeJob(saveJob)
   }
   useEffect(() => {
     if (job && job.title) {
@@ -52,6 +52,9 @@ export default function ({ job = {}, removeJob = () => {}, nextJob = () => {} })
               className="radioInput"
               onClick={() => {
                 do_putInList("applied")
+                setTimeout(function () {
+                  nextJob()
+                }, 300)
               }}
             >
               <span className="radio">
