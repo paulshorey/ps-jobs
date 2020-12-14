@@ -35,7 +35,7 @@ https://stackoverflow.com/jobs?id=409865&q=(js+or+javascript+or+node+or+nodejs+o
 4 JustRemote.co - power search - first 150 "developer" results
 https://justremote.co/power-search
 Actually did not crawl this, but used browser devtools to collect links. Then, crawled the links in APIFY.
-In the future I would just search Google "node react site:lever.co OR greenhouse.io OR workable.com"
+In the future I would just search Google "node react site:lever.co OR site:greenhouse.io OR site:workable.com OR site:applytojob.com"
 
 **See `/src/components/Jobs/apify/*` for the Puppeteer APIFY JavaScript code used to crawl these sites.** Data is extracted to JSON files, to `/src/components/Jobs/json`.
 

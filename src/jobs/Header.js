@@ -12,7 +12,7 @@ export default function () {
         <a href="https://paulshorey.com" target="_blank">
           Paul's
         </a>{" "}
-        "remote mid-senior javascript node react" Job Search
+        Job Search
       </h1>
       <a
         href="https://github.com/paulshorey/ps-jobs"

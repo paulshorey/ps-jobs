@@ -44,8 +44,9 @@ export function aggregate_jobs(lists) {
         }
         // unique ?
         job.uid = (job.title + (job.employer || job.company)).toLowerCase()
+        // duplicate
         if (jobsDict[job.uid]) continue
-        // add
+        // new - add
         jobsDict[job.uid] = fixJob(job)
         continue
       }
@@ -56,8 +57,9 @@ export function aggregate_jobs(lists) {
         job = fixStackoverflowRSS(job)
         // unique ?
         job.uid = (job.title + (job.employer || job.company)).toLowerCase()
+        // duplicate
         if (jobsDict[job.uid]) continue
-        // add
+        // new - add
         jobsDict[job.uid] = fixJob(job)
         continue
       }
@@ -122,6 +124,11 @@ export function fixJob(job) {
   }
   if (job.company) job.company = job.company.trim()
   if (job.meta) job.meta = job.meta.replace(" ago", " ago ").replace(/[\w]+/g, " ")
+  if (job.company) {
+    job.body += "\n<b> Company: " + job.company + "</b><br />"
+  } else {
+    job.body += "\n<b> Employer: " + job.employer + "</b><br />"
+  }
   return job
 }
 export function fixIndeed(job) {

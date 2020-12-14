@@ -18,7 +18,7 @@ import indeed from "./json/indeed.json"
 import stackoverflow from "./json/stackoverflow.json"
 import justremote from "./json/justremoteco.json"
 import JobFull from "./JobFull"
-let jobsDict = aggregate_jobs([linkedin, justremote, indeed, stackoverflow])
+let jobsDict = aggregate_jobs([indeed, linkedin, stackoverflow, justremote])
 
 /*
  * Render, search variables:
