@@ -39,10 +39,6 @@ export function aggregate_jobs(lists) {
           obj.job.url = obj.url
         }
         let job = obj.job
-        // fix
-        if (!job.source) {
-          job = fixIndeed(job)
-        }
         // unique ?
         job.uid = (job.title + (job.employer || job.company)).toLowerCase()
         // duplicate
@@ -133,29 +129,6 @@ export function fixJob(job) {
     job.body += "\n<b> Employer: " + job.employer + "</b><br />"
   }
   job.body += "\n<b> Etc: <b>" + job.subtitle + "</b> " + job.meta + "</b><br />"
-  return job
-}
-export function fixIndeed(job) {
-  if (job.meta) {
-    // add to body
-    job.meta = job.meta.replace(
-      "If you require alternative methods of application or screening, you must approach the employer directly to request this as Indeed is not responsible for the employer's application process.",
-      ""
-    )
-    job.meta = job.meta.replace(/Report job|original job/gi, "")
-    job.meta = job.meta.replace(/[-\s]+$/gi, "")
-    job.body += "\n<b> Meta: " + job.meta + "</b><br />"
-    // employer
-    let company = ""
-    let company_i = job.meta.indexOf(" - ")
-    if (company_i !== -1) {
-      company = job.meta.substring(0, company_i).trim()
-    }
-    job.employer = company
-  }
-  job.body += "\n<b> Company: " + job.company + "</b><br />"
-  job.body += "\n<b> Employer: " + job.employer + "</b><br />"
-  job.source = "Indeed.com"
   return job
 }
 export function fixStackoverflowRSS(job) {

@@ -12,13 +12,14 @@ import { faExpandAlt } from "@fortawesome/pro-solid-svg-icons"
 /*
  * Import sources, aggregate: --- THIS SHOULD BE MOVED TO BACKEND - INGEST INTO ELASTICSEARCH ---
  */
+import stackoverflow2012 from "./json/listings/stackoverflow-20-12.json"
 import indeed2012 from "./json/listings/indeed-20-12.json"
 import linkedin2011 from "./json/listings/linkedin-20-11.json"
 import indeed2011 from "./json/listings/indeed-20-11.json"
 import stackoverflow2011 from "./json/listings/stackoverflow-20-11.json"
 import justremote2011 from "./json/listings/justremoteco-20-11.json"
 import JobFull from "./JobFull"
-let jobsDict = aggregate_jobs([indeed2012, linkedin2011, stackoverflow2011, justremote2011, indeed2011]) //
+let jobsDict = aggregate_jobs([stackoverflow2012, indeed2012, linkedin2011, stackoverflow2011, justremote2011, indeed2011]) //
 
 /*
  * Render, search variables:
@@ -85,15 +86,15 @@ export default class Jobs extends React.Component {
   }
   nextJob = () => {
     // no job selected, so select the first in list
-    // if (!this.state.jobSelected.body) {
-    //   for (let uid in this.state.jobsFound) {
-    //     if (this.state.jobsFound[uid]) {
-    //       this.setState({ jobSelected: this.state.jobsFound[uid] })
-    //       break
-    //     }
-    //   }
-    //   return
-    // }
+    if (!this.state.jobSelected.body) {
+      for (let uid in this.state.jobsFound) {
+        if (this.state.jobsFound[uid]) {
+          this.setState({ jobSelected: this.state.jobsFound[uid] })
+          break
+        }
+      }
+      return
+    }
     // select next job
     if (!this.state.jobSelected.next_job) return
     this.setState({ jobSelected: this.state.jobSelected.next_job })
