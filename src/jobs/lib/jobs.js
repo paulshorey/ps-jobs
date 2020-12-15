@@ -1,6 +1,5 @@
 /*
  * Get jobs from localStorage
- *    TODO: convert to IndexedDB
  */
 export function get_all_ss_jobs_in_list(list) {
   let jobsDict = {}
@@ -16,7 +15,6 @@ export function get_all_ss_jobs_in_list(list) {
 }
 /*
  * Save job to localStorage
- *    TODO: convert to IndexedDB
  */
 export function set_ss_job(key, value) {
   if (typeof window === "object") {
@@ -85,7 +83,7 @@ export function aggregate_jobs(lists) {
  *    TODO: move to web-crawlers, then remove from here!
  */
 export function fixJob(job) {
-  job.subtitle = job.subtitle||''
+  job.subtitle = job.subtitle || ""
   let com_i = job.title.indexOf(",")
   if (com_i !== -1) {
     job.subtitle += job.title.substr(com_i)

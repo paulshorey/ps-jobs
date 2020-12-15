@@ -19,7 +19,14 @@ import indeed2011 from "./json/listings/indeed-20-11.json"
 import stackoverflow2011 from "./json/listings/stackoverflow-20-11.json"
 import justremote2011 from "./json/listings/justremoteco-20-11.json"
 import JobFull from "./JobFull"
-let jobsDict = aggregate_jobs([stackoverflow2012, indeed2012, linkedin2011, stackoverflow2011, justremote2011, indeed2011]) //
+let jobsDict = aggregate_jobs([
+  stackoverflow2012,
+  indeed2012,
+  linkedin2011,
+  stackoverflow2011,
+  justremote2011,
+  indeed2011
+]) //
 
 /*
  * Render, search variables:
@@ -33,7 +40,7 @@ export default class Jobs extends React.Component {
         "our client|java |coordinator|ruby on rails|qa engineer|no remote|remote at first|remote option|work from home at least|remote at first|work from home perks|remotely on occasion",
       reFind: [
         "remote|wfh|commut|work from|temp",
-        "[^\\w]US[ ,A]+|Canada|United.{0,3}States|America|[A-Z]{1}[w]+, ?[A-Z]{2} |NYC|Oregon|Colorado|Utah|Montana|Seattle|Washington|Vermont|Texas|RI|Florida|Nevada|Portland|San Francisco|Denver|New York| EST|PST|CST",
+        "[^\\w]US[ ,A]+|Canada|United.{0,3}States|America|[A-Z]{1}[w]+, ?[A-Z]{2} |NYC|Oregon|Colorado|Utah|Montana|Seattle|Washington|Vermont|Texas|Florida|Nevada|Portland|San Francisco|Denver|New York| EST|PST|CST",
         "full.{0,3}stack|front.{0,3}end"
       ],
       jobSelected: {},
@@ -85,19 +92,19 @@ export default class Jobs extends React.Component {
     }
   }
   nextJob = () => {
-    // no job selected, so select the first in list
-    if (!this.state.jobSelected.body) {
-      for (let uid in this.state.jobsFound) {
-        if (this.state.jobsFound[uid]) {
-          this.setState({ jobSelected: this.state.jobsFound[uid] })
-          break
+      // no job selected, so select the first in list
+      if (!this.state.jobSelected.body) {
+        for (let uid in this.state.jobsFound) {
+          if (this.state.jobsFound[uid]) {
+            this.setState({ jobSelected: this.state.jobsFound[uid] })
+            break
+          }
         }
+        return
       }
-      return
-    }
-    // select next job
-    if (!this.state.jobSelected.next_job) return
-    this.setState({ jobSelected: this.state.jobSelected.next_job })
+      // select next job
+      if (!this.state.jobSelected.next_job) return
+      this.setState({ jobSelected: this.state.jobSelected.next_job })
   }
   prevJob = () => {
     // select previous job
@@ -109,8 +116,7 @@ export default class Jobs extends React.Component {
   /*
    * USER INTERACTIONS
    */
-  removeJob = (uid) => {
-    let job = this.state.jobsFound[uid]
+  removeJob = (job) => {
     if (!job) return
     let jobsFound = this.state.jobsFound
     let jobsFoundLength = this.state.jobsFoundLength - 1
@@ -122,9 +128,9 @@ export default class Jobs extends React.Component {
       job.next_job.prev_job = job.prev_job // can be undefined, it's ok
     }
     // remove
-    delete this.state.jobsFound[uid]
+    delete jobsFound[job.uid]
     // save
-    this.setState({ jobsFound, jobsFoundLength, jobSelected: job.next_job || job.prev_job || job })
+    this.setState({ jobsFound, jobsFoundLength })
   }
   findMentions = ({ reFind, reExclude = "", reList = "" }, selectFirst = true) => {
     // set search string, reset results

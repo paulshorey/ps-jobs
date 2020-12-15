@@ -9,10 +9,14 @@ export default function ({ job = {}, reFind = [], removeJob = () => {}, nextJob 
    */
   const [renderJob, set_renderJob] = useState({})
   const do_putInList = function (list) {
+    // next
+    nextJob()
     // prepare
     let saveJob = { ...renderJob }
+    // remove circular dependencies
     delete saveJob.prev_job
     delete saveJob.next_job
+    // which list?
     saveJob.list = list
     renderJob.list = list
     // save cache
@@ -20,7 +24,7 @@ export default function ({ job = {}, reFind = [], removeJob = () => {}, nextJob 
     // save local state
     set_renderJob(saveJob)
     // remove from nav
-    // removeJob(saveJob)
+    removeJob(saveJob)
   }
   useEffect(() => {
     if (job && job.title) {
@@ -80,9 +84,6 @@ export default function ({ job = {}, reFind = [], removeJob = () => {}, nextJob 
               className="radioInput"
               onClick={() => {
                 do_putInList("applied")
-                setTimeout(function () {
-                  nextJob()
-                }, 300)
               }}
             >
               <span className="radio">
@@ -103,11 +104,6 @@ export default function ({ job = {}, reFind = [], removeJob = () => {}, nextJob 
                 className="radioInput"
                 onClick={() => {
                   do_putInList(val)
-                  if (val === "ignore" || val === "maybe" || val === "apply") {
-                    setTimeout(function () {
-                      nextJob()
-                    }, 300)
-                  }
                 }}
               >
                 <span className="radio">
