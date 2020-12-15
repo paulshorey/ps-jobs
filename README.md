@@ -32,10 +32,7 @@ https://www.indeed.com/jobs?q=(javascript%20or%20js)%20(node%20or%20nodejs%20or%
 Used https://phantombuster.com to export the links from my job search to a text file. Then crawled the links in APIFY.
 https://stackoverflow.com/jobs?id=409865&q=(js+or+javascript+or+node+or+nodejs+or+es6+or+%22+AI+%22+or+ui+or+ux+or+uiux+or+elasticsearch)+-backend&r=true&td=.net+asp+java+j2ee
 
-4 JustRemote.co - power search - first 150 "developer" results
-https://justremote.co/power-search
-Actually did not crawl this, but used browser devtools to collect links. Then, crawled the links in APIFY.
-In the future I would just search Google "node react site:lever.co OR site:greenhouse.io OR site:workable.com OR site:applytojob.com"
+4 Google search - "remote node react site:lever.co OR site:greenhouse.io OR site:workable.com OR site:applytojob.com"
 
 **See `/src/components/Jobs/apify/*` for the Puppeteer APIFY JavaScript code used to crawl these sites.** Data is extracted to JSON files, to `/src/components/Jobs/json`.
 

@@ -1,6 +1,5 @@
 import React from "react"
 import { get_all_ss_jobs_in_list, aggregate_jobs } from "./lib/jobs.js"
-import { find_mentions } from "./lib/html.js"
 import Links from "./Links.js"
 import Home from "./Home.js"
 import Search from "./Search.js"
@@ -13,13 +12,13 @@ import { faExpandAlt } from "@fortawesome/pro-solid-svg-icons"
 /*
  * Import sources, aggregate: --- THIS SHOULD BE MOVED TO BACKEND - INGEST INTO ELASTICSEARCH ---
  */
-// import indeed2012 from "./json/listings/indeed-20-12.json"
+import indeed2012 from "./json/listings/indeed-20-12.json"
 import linkedin2011 from "./json/listings/linkedin-20-11.json"
 import indeed2011 from "./json/listings/indeed-20-11.json"
 import stackoverflow2011 from "./json/listings/stackoverflow-20-11.json"
 import justremote2011 from "./json/listings/justremoteco-20-11.json"
 import JobFull from "./JobFull"
-let jobsDict = aggregate_jobs([[], linkedin2011, stackoverflow2011, justremote2011, indeed2011]) //
+let jobsDict = aggregate_jobs([indeed2012, linkedin2011, stackoverflow2011, justremote2011, indeed2011]) //
 
 /*
  * Render, search variables:
@@ -34,7 +33,7 @@ export default class Jobs extends React.Component {
       reFind: [
         "remote|wfh|commut|work from|temp",
         "[^\\w]US[ ,A]+|Canada|United.{0,3}States|America|[A-Z]{1}[w]+, ?[A-Z]{2} |NYC|Oregon|Colorado|Utah|Montana|Seattle|Washington|Vermont|Texas|RI|Florida|Nevada|Portland|San Francisco|Denver|New York| EST|PST|CST",
-        "full.{0,3}stack|front.{0,3}end",
+        "full.{0,3}stack|front.{0,3}end"
       ],
       jobSelected: {},
       jobsFound: {},
@@ -59,7 +58,7 @@ export default class Jobs extends React.Component {
     /*
      * Load data on page load
      */
-    this.findMentions(this.state) // set 2nd argument to true, to auto-select first job
+    this.findMentions(this.state, false) // set 2nd argument to true, to auto-select first job
     /*
      * USER interaction: key press
      */
@@ -86,15 +85,15 @@ export default class Jobs extends React.Component {
   }
   nextJob = () => {
     // no job selected, so select the first in list
-    if (!this.state.jobSelected.body) {
-      for (let uid in this.state.jobsFound) {
-        if (this.state.jobsFound[uid]) {
-          this.setState({ jobSelected: this.state.jobsFound[uid] })
-          break
-        }
-      }
-      return
-    }
+    // if (!this.state.jobSelected.body) {
+    //   for (let uid in this.state.jobsFound) {
+    //     if (this.state.jobsFound[uid]) {
+    //       this.setState({ jobSelected: this.state.jobsFound[uid] })
+    //       break
+    //     }
+    //   }
+    //   return
+    // }
     // select next job
     if (!this.state.jobSelected.next_job) return
     this.setState({ jobSelected: this.state.jobSelected.next_job })
@@ -147,7 +146,7 @@ export default class Jobs extends React.Component {
         let job = { ...jobsDictUse[uid] }
         job.uid = (job.title + job.employer).toLowerCase()
         // exclude cached data - if new
-        if (reList === "new" && window.localStorage[job.company||job.employer]) continue
+        if (reList === "new" && window.localStorage[job.company || job.employer]) continue
         // hide recruiters
         if (this.state.noRecruiters) {
           if (!job.employer) continue
@@ -223,6 +222,16 @@ export default class Jobs extends React.Component {
    * VIEW
    */
   render() {
+    // scroll to job content (all the way right)
+    if (this.state.jobSelected.uid && typeof window === "object") {
+      let el = window.document.querySelector(".main")
+      if (el) {
+        el.scrollIntoView({
+          behavior: "smooth"
+        })
+      }
+    }
+    // render list
     return (
       <JobsStyled>
         <Header />
