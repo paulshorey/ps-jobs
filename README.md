@@ -1,6 +1,6 @@
-# This is a proof of concept
+# This is a quick proof of concept
 
-**Built with React. This codebase can be easily adapted to any type of content - blogs, news, or research articles.**
+Built with React. This codebase can be easily adapted to any type of content - blogs, news, or research articles. Not finished. No testing or CI yet. Just an experiment.
 
 # Sources
 
